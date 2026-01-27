@@ -1,6 +1,7 @@
 package com.bank.customerprofile.service_impl;
 
-import com.bank.customerprofile.models.DTOs.CustomerRequest;
+import com.bank.customerprofile.exceptions.CustomerNotFoundException;
+import com.bank.customerprofile.models.DTOs.CustomerRequestDTO;
 import com.bank.customerprofile.models.entities.Customer;
 import com.bank.customerprofile.repository.CustomerRepository;
 import com.bank.customerprofile.services.CustomerService;
@@ -20,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
 //    }
 
     @Override
-    public Customer createCustomer(CustomerRequest data){
+    public Customer createCustomer(CustomerRequestDTO data){
         //logic to check the duplicate of customers
         customerrepository.findByEmail(data.getEmail())
                 .ifPresent(c -> { throw new RuntimeException("Customer Already Exist With This Email " + data.getEmail() );
@@ -43,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Long Id){
-        return customerrepository.findById(Id);
+    public Customer getCustomerById(Long Id){
+        return customerrepository.findById(Id).orElseThrow(() -> new CustomerNotFoundException("Customer Not Found with id: " + Id));
     }
 }
