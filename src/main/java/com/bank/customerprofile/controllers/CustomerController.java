@@ -1,5 +1,6 @@
 package com.bank.customerprofile.controllers;
 
+import com.bank.customerprofile.models.DTOs.Customer.CreateCustomer;
 import com.bank.customerprofile.models.DTOs.CustomerRequestDTO;
 import com.bank.customerprofile.models.DTOs.CustomerResponseDto;
 import com.bank.customerprofile.models.entities.Customer;
@@ -21,6 +22,7 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@Valid@RequestBody CustomerRequestDTO data){
@@ -47,8 +49,10 @@ public class CustomerController {
         return  ResponseEntity.ok(customerService.getAllCustomer(page,size,sortBy,direction));
     }
 
-//    public ResponseEntity<Page<CustomerResponseDto>> createCustomer{
-//
-//    }
+    @PostMapping("/CreateCustomer")
+    public ResponseEntity<String>   CreateCustomer(@RequestBody CreateCustomer data){
+        String response = customerService.CreateCustomer(data);
+        return ResponseEntity.ok(response);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.bank.customerprofile.services;
 
+import com.bank.customerprofile.models.DTOs.Customer.CreateCustomer;
 import com.bank.customerprofile.models.DTOs.CustomerRequestDTO;
 import com.bank.customerprofile.models.DTOs.CustomerResponseDto;
 import com.bank.customerprofile.models.entities.Customer;
@@ -17,4 +18,7 @@ public interface CustomerService {
     Customer getCustomerById(Long Id);
 
     Page<CustomerResponseDto> getAllCustomer(int page, int size, String sortBy, String Direction);
+
+    String CreateCustomer(CreateCustomer data);
+
 }
