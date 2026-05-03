@@ -2,10 +2,12 @@ package com.bank.customerprofile.service_impl;
 
 import com.bank.customerprofile.exceptions.CustomerNotFoundException;
 import com.bank.customerprofile.mapper.CustomerMapper;
+import com.bank.customerprofile.models.DTOs.Customer.CreateCustomer;
 import com.bank.customerprofile.models.DTOs.CustomerRequestDTO;
 import com.bank.customerprofile.models.DTOs.CustomerResponseDto;
 import com.bank.customerprofile.models.entities.Customer;
 import com.bank.customerprofile.repository.CustomerRepository;
+import com.bank.customerprofile.repository.DataAccess.CustomerJdbcRepository;
 import com.bank.customerprofile.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,10 +24,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerrepository;
-
-//    public CustomerServiceImpl(CustomerRepository customerrepository){
-//        this.customerrepository= customerrepository;
-//    }
+    private final CustomerJdbcRepository customerJdbcRepository;
 
     @Override
     public Customer createCustomer(CustomerRequestDTO data){
@@ -66,5 +65,11 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerrepository.findAll(pageable).map(CustomerMapper::toDTO);
 
+    }
+
+    @Override
+    public String CreateCustomer(CreateCustomer data) {
+        customerJdbcRepository.CreateCustomer(data);
+        return "Customer Created Via sp successfully!";
     }
 }
